@@ -5,7 +5,8 @@ info:
   version: 1.1.0
 servers:
   - url: https://api.hubapi.com
-    description: HubSpot public API
+    description: HubSpot Public API
+
 
 paths:
   /crm/v3/objects/companies/search:
