@@ -6,13 +6,11 @@ info:
 servers:
   - url: https://api.hubapi.com
     description: HubSpot Public API
-
-
 paths:
   /crm/v3/objects/companies/search:
     post:
       operationId: searchCompanyByName
-      summary: Recherche une entreprise (bailleur social) par nom exact
+      summary: Recherche une entreprise par nom
       requestBody:
         required: true
         content:
@@ -32,29 +30,21 @@ paths:
                           properties:
                             propertyName:
                               type: string
-                              example: name
                             operator:
                               type: string
-                              example: EQ
                             value:
                               type: string
-                              example: Domaxis
       responses:
         '200':
-          description: Résultats de la recherche (entreprises)
+          description: Résultats de la recherche
           content:
             application/json:
               schema:
                 type: object
-        '404':
-          description: Aucune entreprise trouvée
-      security:
-        - bearerAuth: []
-
   /crm/v3/objects/notes:
     get:
       operationId: getNotesForCompany
-      summary: Récupère toutes les notes liées à une entreprise
+      summary: Récupère les notes associées à une entreprise
       parameters:
         - name: associations.company
           in: query
@@ -63,3 +53,50 @@ paths:
             type: string
       responses:
         '200':
+          description: Notes récupérées
+          content:
+            application/json:
+              schema:
+                type: object
+  /crm/v3/objects/calls:
+    get:
+      operationId: getCallsForCompany
+      summary: Récupère les appels associés à une entreprise
+      parameters:
+        - name: associations.company
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Appels récupérés
+          content:
+            application/json:
+              schema:
+                type: object
+  /crm/v3/objects/emails:
+    get:
+      operationId: getEmailsForCompany
+      summary: Récupère les emails associés à une entreprise
+      parameters:
+        - name: associations.company
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Emails récupérés
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
